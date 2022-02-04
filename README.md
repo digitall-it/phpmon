@@ -337,6 +337,18 @@ To find the logs, take a look in `~/Library/Logs/DiagnosticReports` (in Finder) 
 
 </details>
 
+<details>
+<summary><strong>PHP Monitor complains that it cannot read Valet version (`valet --version` failed)</strong></summary>
+
+First, try to issue manually a `valet --version` command in your terminal and look after the result. Sometimes there are no errors, but the output may be littered by deprecation warnings. Indeed, as Laravel Valet is installed globally via composer, it may share some dependancies with other software, and those can make composer install an older version of them (`symfony/console` for example) that issue those warnings. 
+	
+As PHP Mon relies on the output of Valet to be clean, it cannot parse those messages. In that case, you can follow two routes:
+	
+- Disable warnings in your php.ini file, and you will be good to go
+- Try to solve the deprecation warning: a small trick is to check for the deprecation warning's package using the commands `why`and `why-not`. For example if your warning is raised by `symfony/console`, use `composer why-not symfony/console 4.0` to know what package prevents it to update to a more recent version, and then go ahead and remove or raise an issue with that package mantainer
+
+</details>
+
 ## 📝 Having another issue?
 
 I did not include any tracking or analytics software, so if you encounter issues, let me know [via an issue](https://github.com/nicoverbruggen/phpmon/issues/new).
